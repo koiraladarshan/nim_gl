@@ -1,4 +1,5 @@
 import ../nim_glpkg/ksa as k
+import ../nim_glpkg/glm as m
 import shaders as s
 
 
@@ -62,6 +63,11 @@ proc init*() : void =
     pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
 
 proc draw*() = 
+    var eye : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
+    var center : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
+    var up : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
+    var look_at : mat4 = m.lookat(eye, center, up)
+    var perspective : mat4 = m.persp(0.42, 640/480, 0.1, 100)
     pro.bind_shader()
     k.draw_elements(6*6, nil)
 

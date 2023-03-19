@@ -97,3 +97,5 @@ void resize_gl_viewport(GLFWwindow* window)
     glfwGetWindowSize(window, &width, &height);
     glViewport(0, 0, width, height);
 }
+
+glGetUniformLocation("ho");

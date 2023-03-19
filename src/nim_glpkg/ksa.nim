@@ -109,3 +109,8 @@ proc init*(ibuffer:var ibo, data: pointer, size: cuint, types: cuint) {.importc:
 proc kbind*(ibuffer: var ibo) {.importc: "ksa_ibuffer_bind".}
 proc ubind*(ibuffer: var ibo) {.importc: "ksa_ibuffer_unbind".}
 proc destory*(ibuffer: var ibo) {.importc: "ksa_ibuffer_destroy".}
+
+#[
+    RAW FUNCTIONS
+]#
+proc glGetUniformLocation(program: cuint, name: cstring) : cint {.importc.}
