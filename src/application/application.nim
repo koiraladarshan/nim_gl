@@ -29,7 +29,13 @@ var pro: cuint
 var ibo: ibo
 
 proc init*() : void = 
-    let scene = import_file("/home/darshan/Documents/projects/nim_gl/res/test.blend")
+#    do_the_import_thing("/home/darshan/Documents/projects/nim_gl/res/test.obj")
+    var scene : ptr aiScene 
+    discard import_file("/home/darshan/Documents/projects/nim_gl/res/test.obj", scene)
+
+    echo scene.mNumMeshes
+    echo scene.mNumLights
+    echo scene.mNumMaterials
 
     let red : color = color(r: 1.0, g: 0.0, b:0.0)
     let green : color = color(r: 0.0, g: 1.0, b:0.0)

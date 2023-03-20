@@ -76,16 +76,31 @@ type
         r*, g*, b*, a* : cfloat
 
     aiTexel* = object 
-        b*, g*, r*, a* : cfloat
+        b*, g*, r*, a* : uint8 #unsigned char
 
     aiAABB* = object
         mMin* : aiVector3D
         mMax* : aiVector3D
     
+    aiMetadataType = enum
+        AI_BOOL = 0
+        AI_INT32 = 1
+        AI_UINT64 = 2
+        AI_FLOAT = 3
+        AI_DOUBLE = 4
+        AI_AISTRING = 5
+        AI_AIVECTOR3D = 6
+        AI_AIMETADATA = 7
+        AI_META_MAX = 8
+    
+    aiMetadataEntry = object
+        mType : aiMetadataType
+        mData : pointer
+
     aiMetaData* = object
         mNumProperties* : cuint
         mKeys* : ptr aiString
-        mValues* : ptr int
+        mValues* : ptr aiMetadataEntry
     
     aiNode* = object
         mName* : aiString
@@ -94,7 +109,7 @@ type
         nNumChildren* : cuint
         mChildren* : ptr ptr aiNode
         nNumMeshes* : cuint
-        mMeshes* : cuint
+        mMeshes* : ptr cuint
         mMetaData* : ptr aiMetaData
     
     aiFace* = object
@@ -229,7 +244,7 @@ type
         mAnimMeshes* : ptr ptr aiAnimMesh
         mMethod* : cuint
         mAABB* : aiAABB
-        mTextureCoordsNames* : aiString
+        mTextureCoordsNames* : ptr ptr aiString
 
     aiLightSourceType* = enum
         aiLightSource_UNDEFINED = 0x0
@@ -294,6 +309,7 @@ type
         mTextures* : ptr ptr aiTexture
         mNumLights* : cuint
         mLights* : ptr ptr aiLight
+        mNumCameras : cuint
         mCameras* : ptr ptr aiCamera
         mMetaData* : ptr aiMetaData
         mName* : aiString
@@ -303,11 +319,11 @@ type
 
 proc aiImportFile*(pFile: cstring, pFlags: cuint) : ptr aiScene {.importc, dynLib:libName.}
 
-proc do_the_import_thing*(pFile: cstring, scene: ptr aiScene) {.importc:"DoTheImportThing".}
+proc import_file*(path: cstring, scene: var  ptr aiScene) : cint {.importc.}
 
-proc import_file*(file : cstring) : aiScene =
-    var scene : aiScene
-    do_the_import_thing(file, scene.addr)
-    echo scene.mNumLights
-    echo scene.mNumMeshes
-    result = scene
+# proc import_file*(file : cstring) : ptr aiScene =
+#     var scene : ptr aiScene
+#     do_the_import_thing(file, scene)
+#     echo scene.mNumLights
+#     echo scene.mNumMeshes
+#     result = scene
