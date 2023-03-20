@@ -98,4 +98,7 @@ void resize_gl_viewport(GLFWwindow* window)
     glViewport(0, 0, width, height);
 }
 
-glGetUniformLocation("ho");
+void ksa_uniform_mat4(unsigned int program, char* name, float* value)
+{
+    glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, value);
+}

@@ -110,7 +110,4 @@ proc kbind*(ibuffer: var ibo) {.importc: "ksa_ibuffer_bind".}
 proc ubind*(ibuffer: var ibo) {.importc: "ksa_ibuffer_unbind".}
 proc destory*(ibuffer: var ibo) {.importc: "ksa_ibuffer_destroy".}
 
-#[
-    RAW FUNCTIONS
-]#
-proc glGetUniformLocation(program: cuint, name: cstring) : cint {.importc.}
+proc uniform_mat4*(program: cuint, name: cstring, value: ptr cfloat) {.importc:"ksa_uniform_mat4".}

@@ -1,7 +1,7 @@
 import ../nim_glpkg/ksa as k
 import ../nim_glpkg/glm as m
 import shaders as s
-
+import ../nim_glpkg/assimp as a
 
 type 
     pos = object
@@ -29,6 +29,8 @@ var pro: cuint
 var ibo: ibo
 
 proc init*() : void = 
+    let scene = import_file("/home/darshan/Documents/projects/nim_gl/res/test.blend")
+
     let red : color = color(r: 1.0, g: 0.0, b:0.0)
     let green : color = color(r: 0.0, g: 1.0, b:0.0)
     let blue : color = color(r: 1.0, g: 0.0, b:1.0)
@@ -63,11 +65,14 @@ proc init*() : void =
     pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
 
 proc draw*() = 
-    var eye : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
-    var center : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
-    var up : vec3 = [(cfloat)0.5, (cfloat)0.2, (cfloat) 0.4]
+    var eye : vec3 = [(cfloat)1, (cfloat)1, (cfloat) 1]
+    var center : vec3 = [(cfloat)0.0, (cfloat)0.0, (cfloat) 0.0]
+    var up : vec3 = [(cfloat)0, (cfloat)1, (cfloat) 0]
     var look_at : mat4 = m.lookat(eye, center, up)
-    var perspective : mat4 = m.persp(0.42, 640/480, 0.1, 100)
+    var perspective : mat4 = m.persp(0.7853, 640/480, 0.1, 100)
+    var mvp : mat4 = perspective * look_at
+    pro.bind_shader()
+    k.uniform_mat4(pro, "u_mvp", mvp[0][0].unsafeAddr)
     pro.bind_shader()
     k.draw_elements(6*6, nil)
 
