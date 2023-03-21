@@ -123,9 +123,9 @@ type
     aiBone* = object
         mName* : aiString
         mNumWeights* : cuint
-        when declared(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
+        when not declared(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
             mArmature* : ptr aiNode
-            mNode* : ptr mNode
+            mNode* : ptr aiNode
         mWeights* : aiVertexWeight
         mOffsetMatrix* : aiMatrix4x4
         
@@ -213,9 +213,9 @@ type
         mNumChannels* : cuint
         mChannels* : ptr ptr aiNodeAnim
         mNumMeshChannels* : cuint
-        mMeshChannels* : aiMeshAnim
+        mMeshChannels* : ptr ptr aiMeshAnim
         mNumMorphMeshChannels* : cuint
-        mMorphMeshChannels* : aiMeshMorphAnim
+        mMorphMeshChannels* : ptr ptr aiMeshMorphAnim
 
     aiTexture* = object
         mWidth* : cuint
@@ -319,7 +319,7 @@ type
 
 proc aiImportFile*(pFile: cstring, pFlags: cuint) : ptr aiScene {.importc, dynLib:libName.}
 
-proc import_file*(path: cstring, scene: var  ptr aiScene) : cint {.importc.}
+proc import_file*(path: cstring, scene:  ptr aiScene) : cint {.importc.}
 
 # proc import_file*(file : cstring) : ptr aiScene =
 #     var scene : ptr aiScene

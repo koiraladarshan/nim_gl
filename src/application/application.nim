@@ -30,12 +30,35 @@ var ibo: ibo
 
 proc init*() : void = 
 #    do_the_import_thing("/home/darshan/Documents/projects/nim_gl/res/test.obj")
-    var scene : ptr aiScene 
-    discard import_file("/home/darshan/Documents/projects/nim_gl/res/test.obj", scene)
+    var scene : aiScene 
+    discard import_file("/home/darshan/Documents/projects/nim_gl/res/test.obj", scene.unsafeAddr)
+
+    echo "from nim(scene): ", sizeof(scene)
+    echo "from nim(aiscene)", sizeof(aiScene)
+    echo "from nim(ainode)", sizeof(aiNode)
+    echo "from nim(aiMesh)", sizeof(aiMesh)
+    echo "from nim(aiMaterial)", sizeof(aiMaterial)
+    echo "from nim(aiAnimation)", sizeof(aiAnimation)
+    echo "from nim(aiTexture)", sizeof(aiTexture)
+    echo "from nim(aiLight)", sizeof(aiLight)
+    echo "from nim(aiCamera)", sizeof(aiCamera)
+    echo "from nim(aiMetadata)", sizeof(aiMetaData)
+    echo "from nim(aiString)", sizeof(aiString)
+    echo "from nim(aiSkeleton)", sizeof(aiSkeleton)
+    echo "from nim(aiNodeAnim)", sizeof(aiNodeAnim)
+    echo "from nim(aiMeshAnim)", sizeof(aiMeshAnim)
+    echo "from nim(aiMeshMorphAnim)", sizeof(aiMeshMorphAnim)
+    echo "from nim(aiFace)", sizeof(aiFace)
+    echo "from nim(aiBone)", sizeof(aiBone)
+    echo "from nim(aiVertexWeight)", sizeof(aiVertexWeight)
+    echo "from nim(aiAABB)", sizeof(aiAABB)
+    echo "from nim(aiAnimMesh)", sizeof(aiAnimMesh)
+    echo "from nim(aiVector3D)", sizeof(aiVector3D)
+    echo "from nim(aiColor4D)", sizeof(aiColor4D)
+    echo "from nim(cuint)", sizeof(cuint)
+    echo "from nim(cfloat)", sizeof(cfloat)
 
     echo scene.mNumMeshes
-    echo scene.mNumLights
-    echo scene.mNumMaterials
 
     let red : color = color(r: 1.0, g: 0.0, b:0.0)
     let green : color = color(r: 0.0, g: 1.0, b:0.0)

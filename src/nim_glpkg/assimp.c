@@ -20,6 +20,31 @@ int import_file(const char* string, const struct aiScene* scene) {
     return 0;
   }
 
+  printf("Size (from C)(aiscene):%d\n", (int)sizeof(struct aiScene));
+  printf("from C(aiscene)%d\n", (int)sizeof(struct aiScene));
+  printf("from C(ainode)%d\n", (int)sizeof(struct aiNode));
+  printf("from C(aiMesh)%d\n", (int)sizeof(struct aiMesh));
+  printf("from C(aiMaterial)%d\n", (int)sizeof(struct aiMaterial));
+  printf("from C(aiAnimation)%d\n", (int)sizeof(struct aiAnimation));
+  printf("from C(aiTexture)%d\n", (int)sizeof(struct aiTexture));
+  printf("from C(aiLight)%d\n", (int)sizeof(struct aiLight));
+  printf("from C(aiCamera)%d\n", (int)sizeof(struct aiCamera));
+  printf("from C(aiMetadata)%d\n", (int)sizeof(struct aiMetadata));
+  printf("from C(aiString)%d\n", (int)sizeof(struct aiString));
+  printf("from C(aiSkeleton)%d\n", (int)sizeof(struct aiSkeleton));
+  printf("from C(aiNodeAnim)%d\n", (int)sizeof(struct aiNodeAnim));
+  printf("from C(aiMeshAnim)%d\n", (int)sizeof(struct aiMeshAnim));
+  printf("from C(aiMeshMorphAnim)%d\n", (int)sizeof(struct aiMeshMorphAnim));
+  printf("from C(aiFace)%d\n", (int)sizeof(struct aiFace));
+  printf("from C(aiBone)%d\n", (int)sizeof(struct aiBone));
+  printf("from C(aiVertexWeight)%d\n", (int)sizeof(struct aiVertexWeight));
+  printf("from C(aiAABB)%d\n", (int)sizeof(struct aiAABB));
+  printf("from C(aiAnimMesh)%d\n", (int)sizeof(struct aiAnimMesh));
+  printf("from C(aiVector3D)%d\n", (int)sizeof(struct aiVector3D));
+  printf("from C(aiColor4D)%d\n", (int)sizeof(struct aiColor4D));
+  printf("from nim(cuint)%d\n", (int)sizeof(unsigned int));
+  printf("from nim(cfloat)%d\n", (int)sizeof(float));
+
   printf("hello world\n");
   printf("FUCKING LIGHTS: %d\n", scene->mNumLights);
   printf("FUCKING MESHEDS: %d\n", scene->mNumMeshes);
