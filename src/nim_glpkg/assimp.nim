@@ -135,8 +135,8 @@ type
         mNormals* : ptr aiVector3D
         mTangents* : ptr aiVector3D
         mBitangents* : ptr aiVector3D
-        mColors* : ptr array[AI_MAX_NUMBER_OF_COLOR_SETS, aiColor4D]
-        mTextureCoords* : ptr array[AI_MAX_NUMBER_OF_TEXTURECOORDS, aiVector3D]
+        mColors* : array[AI_MAX_NUMBER_OF_COLOR_SETS, ptr aiColor4D]
+        mTextureCoords* : array[AI_MAX_NUMBER_OF_TEXTURECOORDS, ptr aiVector3D]
         mNumVertices* : cuint
         mWeight* : cfloat
 
@@ -232,8 +232,8 @@ type
         mNormals* : ptr aiVector3D
         mTangents* : ptr aiVector3D
         mBitangents* : ptr aiVector3D
-        mColors* : ptr array[AI_MAX_NUMBER_OF_COLOR_SETS, aiColor4D]
-        mTextureCoords* : ptr array[AI_MAX_NUMBER_OF_TEXTURECOORDS, aiVector3D]
+        mColors* : array[AI_MAX_NUMBER_OF_COLOR_SETS, ptr aiColor4D]
+        mTextureCoords* :  array[AI_MAX_NUMBER_OF_TEXTURECOORDS, ptr aiVector3D]
         mNumUVComponents* : array[AI_MAX_NUMBER_OF_TEXTURECOORDS, cuint]
         mFaces* : ptr aiFace
         mNumBones* : cuint
