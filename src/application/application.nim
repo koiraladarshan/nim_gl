@@ -29,11 +29,10 @@ var pro: cuint
 var ibo: ibo
 
 proc init*() : void = 
-#    do_the_import_thing("/home/darshan/Documents/projects/nim_gl/res/test.obj")
-    var scene : aiScene 
-    discard import_file("/home/darshan/Documents/projects/nim_gl/res/test.obj", scene.unsafeAddr)
+    var sceneptr : ptr aiScene
+    sceneptr = import_file("/home/darshan/Documents/projects/nim_gl/res/test.obj", sceneptr)
 
-    echo "from nim(scene): ", sizeof(scene)
+    echo "from nim(scene): ", sizeof(sceneptr)
     echo "from nim(aiscene)", sizeof(aiScene)
     echo "from nim(ainode)", sizeof(aiNode)
     echo "from nim(aiMesh)", sizeof(aiMesh)
@@ -59,7 +58,7 @@ proc init*() : void =
     echo "from nim(cfloat)", sizeof(cfloat)
     echo "from nim(aiSkeletonBone)", sizeof(aiSkeletonBone)
 
-    echo scene.mNumMeshes
+    echo "From Nim:", sceneptr[].mNumMeshes
 
     let red : color = color(r: 1.0, g: 0.0, b:0.0)
     let green : color = color(r: 0.0, g: 1.0, b:0.0)

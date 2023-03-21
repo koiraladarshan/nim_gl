@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 
-int import_file(const char* string, const struct aiScene* scene) {
+const struct aiScene* import_file(const char* string, const struct aiScene* scene) {
   // Start the import on the given file with some example postprocessing
   // Usually - if speed is not the most important aspect for you - you'll t
   // probably to request more postprocessing than we do in this example.
@@ -54,6 +54,11 @@ int import_file(const char* string, const struct aiScene* scene) {
 //  DoTheSceneProcessing( scene);
 
   // We're done. Release all resources associated with this import
-// aiReleaseImport( scene);
-  return 1;
+// aiReleaseImport(scene);
+  return scene;
+}
+
+void release(const struct aiScene* scene)
+{
+  aiReleaseImport(scene);
 }

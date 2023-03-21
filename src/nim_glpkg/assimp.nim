@@ -317,13 +317,14 @@ type
     mName*: aiString
     mNumSkeletons*: cuint
     mSkeletons*: ptr ptr aiSkeleton
+    mPrivate: cstring
 
 
 
 
 proc aiImportFile*(pFile: cstring, pFlags: cuint) : ptr aiScene {.importc, dynLib:libName.}
 
-proc import_file*(path: cstring, scene:  ptr aiScene) : cint {.importc.}
+proc import_file*(path: cstring, scene:  ptr aiScene) : ptr aiScene {.importc.}
 
 # proc import_file*(file : cstring) : ptr aiScene =
 #     var scene : ptr aiScene
