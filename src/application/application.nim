@@ -57,6 +57,7 @@ proc init*() : void =
     echo "from nim(aiColor4D)", sizeof(aiColor4D)
     echo "from nim(cuint)", sizeof(cuint)
     echo "from nim(cfloat)", sizeof(cfloat)
+    echo "from nim(aiSkeletonBone)", sizeof(aiSkeletonBone)
 
     echo scene.mNumMeshes
 

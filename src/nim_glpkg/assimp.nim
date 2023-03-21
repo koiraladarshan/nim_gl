@@ -123,7 +123,7 @@ type
     aiBone* = object
         mName* : aiString
         mNumWeights* : cuint
-        when not declared(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
+        when not defined(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
             mArmature* : ptr aiNode
             mNode* : ptr aiNode
         mWeights* : aiVertexWeight
@@ -283,38 +283,42 @@ type
     
     aiSkeletonBone* = object
         mParent* : cint
-        when declared(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
+        when not defined(ASSIMP_BUILD_NO_ARMATUREPOPULATE_PROCESS):
             mArmature*: ptr aiNode
             mNode* : ptr aiNode
+        mNumnWeights : cuint
         mMeshId* : ptr aiMesh        
         mWeights* : ptr aiVertexWeight
-        mOffsetMatrix* : ptr aiMatrix4x4
-        mLocalMatrix* : ptr aiMatrix4x4
+        mOffsetMatrix* : aiMatrix4x4
+        mLocalMatrix* : aiMatrix4x4
 
     aiSkeleton* = object
         mName* : aiString
         mNumBones* : cuint
         mBones* : ptr ptr aiSkeletonBone
 
-    aiScene* = object
-        mFlags* : cuint
-        mRootNode* : ptr aiNode
-        mNumMeshes* : cuint
-        mMeshes* : ptr ptr aiMesh
-        mNumMaterials* : cuint
-        mMaterials* : ptr ptr aiMaterial
-        mNumAnimations* : cuint
-        mAnimations* : ptr ptr aiAnimation
-        mNumTextures* : cuint
-        mTextures* : ptr ptr aiTexture
-        mNumLights* : cuint
-        mLights* : ptr ptr aiLight
-        mNumCameras : cuint
-        mCameras* : ptr ptr aiCamera
-        mMetaData* : ptr aiMetaData
-        mName* : aiString
-        mNumSkeletons* : cuint
-        mSkeletons* : ptr ptr aiSkeleton
+type
+  aiScene* = object
+    mFlags*: cuint
+    mRootNode*: ptr aiNode
+    mNumMeshes*: cuint
+    mMeshes*: ptr ptr aiMesh
+    mNumMaterials*: cuint
+    mMaterials*: ptr ptr aiMaterial
+    mNumAnimations*: cuint
+    mAnimations*: ptr ptr aiAnimation
+    mNumTextures*: cuint
+    mTextures*: ptr ptr aiTexture
+    mNumLights*: cuint
+    mLights*: ptr ptr aiLight
+    mNumCameras*: cuint
+    mCameras*: ptr ptr aiCamera
+    mMetaData*: ptr aiMetadata
+    mName*: aiString
+    mNumSkeletons*: cuint
+    mSkeletons*: ptr ptr aiSkeleton
+
+
 
 
 proc aiImportFile*(pFile: cstring, pFlags: cuint) : ptr aiScene {.importc, dynLib:libName.}

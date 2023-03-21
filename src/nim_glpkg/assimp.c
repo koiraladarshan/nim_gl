@@ -1,4 +1,5 @@
 #include <assimp/cimport.h>        // Plain-C interface
+#include <assimp/mesh.h>
 #include <assimp/scene.h>        // Output data structure
 #include <assimp/postprocess.h>    // Post processing flags
 #include <stdio.h>
@@ -44,6 +45,7 @@ int import_file(const char* string, const struct aiScene* scene) {
   printf("from C(aiColor4D)%d\n", (int)sizeof(struct aiColor4D));
   printf("from nim(cuint)%d\n", (int)sizeof(unsigned int));
   printf("from nim(cfloat)%d\n", (int)sizeof(float));
+  printf("from nim(aiSkeleteonBone)%d\n", (int)sizeof(struct aiSkeletonBone));
 
   printf("hello world\n");
   printf("FUCKING LIGHTS: %d\n", scene->mNumLights);
