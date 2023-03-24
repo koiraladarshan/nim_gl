@@ -52,13 +52,21 @@ const struct aiScene* import_file(const char* string, const struct aiScene* scen
   printf("FUCKING MESHEDS: %d\n", scene->mNumMeshes);
   // Now we can access the file's contents
 //  DoTheSceneProcessing( scene);
+  printf("mNumVerts: %d\n", scene->mMeshes[0]->mNumVertices);
 
+  for(int i = 0; i < scene->mMeshes[0]->mNumFaces; i++)
+  {
+    for (int j = 0; j < scene->mMeshes[0]->mFaces[i].mNumIndices; j++)
+    {
+      printf("mIndices%d:%d\n", j,  scene->mMeshes[0]->mFaces[i].mIndices[j]);
+    }
+  }
   // We're done. Release all resources associated with this import
 // aiReleaseImport(scene);
   return scene;
 }
 
-void release(const struct aiScene* scene)
+void release_file(const struct aiScene* scene)
 {
   aiReleaseImport(scene);
 }
