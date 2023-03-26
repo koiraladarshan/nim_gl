@@ -1,4 +1,4 @@
-{.passl: "`pkg-config --libs glew glfw3 assimp` -Wall".}
+{.passl: " -I C:/libs C:/libs/glfw3dll.lib C:/libs/assimp.lib C:/libs/glew32.lib OpenGL32.lib".}
 {.compile:"ksa.c".}
 
 import glfw

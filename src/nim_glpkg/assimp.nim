@@ -1,7 +1,21 @@
-{.passl: "-lassimp".}
 {.compile: "assimp.c".}
 
-const libName = "libassimp.so"
+type 
+    pos* = object
+        x*: cfloat
+        y*: cfloat
+        z*: cfloat
+    
+    color = object
+        r*: cfloat
+        g*: cfloat
+        b*: cfloat
+
+type 
+    vertex* = object
+        p*: pos
+        c*: color
+        n*: pos
 
 const MAXLEN = 1024
 const AI_MAX_NUMBER_OF_COLOR_SETS = 0x8
@@ -11,8 +25,6 @@ const HINTMAXTEXTURELEN = 9
 #[
     ALL PFLAGS
 ]#
-
-
 
 type 
     aiPostProcessSteps* = enum
@@ -106,9 +118,9 @@ type
         mName* : aiString
         mTransformation* : aiMatrix4x4
         mParent* : ptr aiNode
-        nNumChildren* : cuint
+        mNumChildren* : cuint
         mChildren* : ptr ptr aiNode
-        nNumMeshes* : cuint
+        mNumMeshes* : cuint
         mMeshes* : ptr cuint
         mMetaData* : ptr aiMetaData
     
@@ -320,15 +332,30 @@ type
     mPrivate: cstring
 
 
+# KSA 
 
+type
+    position* = object
+        x*, y*, z*: cfloat
 
-proc aiImportFile*(pFile: cstring, pFlags: cuint) : ptr aiScene {.importc, dynLib:libName.}
+type
+    tris* = object
+        indices* : array[0..2, cuint]
+
+type 
+    model* = object
+        pos* : ptr position
+        npos* : cuint
+        tris* : ptr tris
+        ntris* : cuint
+        norm*: ptr position
+        nnorm*: cuint
 
 proc import_file*(path: cstring, scene:  ptr aiScene) : ptr aiScene {.importc.}
 
-# proc import_file*(file : cstring) : ptr aiScene =
-#     var scene : ptr aiScene
-#     do_the_import_thing(file, scene)
-#     echo scene.mNumLights
-#     echo scene.mNumMeshes
-#     result = scene
+proc destroy_file*(scene: ptr aiScene) {.importc.}
+
+proc get_models*(scene: ptr aiScene, models: ptr ptr model) {.importc.}
+
+proc model_to_vertex*(themodel: ptr model, vertices: ptr ptr vertex, index: cuint) {.importc.}
+

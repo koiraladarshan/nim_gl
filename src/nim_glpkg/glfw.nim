@@ -11,7 +11,12 @@ macro `~@`*(arg: untyped) : untyped =
       discard
 
 # Required Dynamic Libraries
-const libName* = "libglfw.so"
+when defined(Windows):
+  const libName* = "glfw3.dll"
+elif defined(Linux):
+  const libName* = "libglfw.so"
+elif defined(MacOsX):
+  const libName* = "libglfw.dylib"
 
 # Operators
 proc `!`*(input: cint) : bool = 

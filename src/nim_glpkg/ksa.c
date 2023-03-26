@@ -5,10 +5,10 @@
 
 void draw_arrays(unsigned int first, unsigned int count)
 {
-    glDrawArrays(GL_TRIANGLES,  first, count);
+    glDrawArrays(GL_TRIANGLES, first, count);
 }
 
-void draw_elements(int count, void* data)
+void draw_elements(int count, void *data)
 {
     // for(int i = 0; i < 6; i++)
     // {
@@ -17,9 +17,9 @@ void draw_elements(int count, void* data)
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, data);
 }
 
-int init_glew() 
-{ 
-    if(glewInit() == GLEW_OK)
+int init_glew()
+{
+    if (glewInit() == GLEW_OK)
         return 1;
     else
         return 0;
@@ -35,15 +35,14 @@ void clear()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-
 void GLAPIENTRY debugCall(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
 {
     printf("OpenGl Error: \n");
     printf("%s, %d)\n", __FILE__, __LINE__);
-    fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
-//    exit(-1);
+    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type, severity, message);
+    //    exit(-1);
 }
 
 void do_glfw_init()
@@ -59,7 +58,7 @@ void debug_callback_setup()
     glDebugMessageCallback(debugCall, NULL);
 }
 
-unsigned int compile_shaders(const char* vshader_source, const char* fshader_source)
+unsigned int compile_shaders(const char *vshader_source, const char *fshader_source)
 {
     printf("%s\n", vshader_source);
     printf("%s\n", fshader_source);
@@ -88,17 +87,20 @@ void bind_shader(unsigned int program)
 void setup_gl_viewport(int x, int y, int width, int height)
 {
     glViewport(x, y, width, height);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_ALWAYS);
 }
 
-void resize_gl_viewport(GLFWwindow* window)
+void resize_gl_viewport(GLFWwindow *window)
 {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
     glViewport(0, 0, width, height);
 }
 
-void ksa_uniform_mat4(unsigned int program, char* name, float* value)
+void ksa_uniform_mat4(unsigned int program, char *name, float *value)
 {
     glUniformMatrix4fv(glGetUniformLocation(program, name), 1, GL_FALSE, value);
 }
