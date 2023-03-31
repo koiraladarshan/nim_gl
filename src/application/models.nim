@@ -28,22 +28,27 @@ type
         model* : ptr model
         ntris* : cuint
 
-proc init*(antah: var obj, index: cuint) = 
-    model_to_vertex(antah.model, antah.vert.addr, index)
-    new_carray(model, models, antah.model, index)
+proc init*(antah: ptr obj, index: cuint) = 
+    model_to_vertex(antah.model, antah[].vert.addr, index)
+    new_carray(model, models, antah[].model, index)
+    new_carray(vertex, vertices, antah[].vert, models[index].npos)
 
     antah.ntris = models[index].ntris
-    antah.vao.init()
-    antah.vbl.init()
-    antah.vbl.push(3)
-    antah.vbl.push(3)
-    antah.vbl.push(3)
-    antah.ibo.init(data=models[index].tris, size=(cuint)(models[index].ntris * (cuint)sizeof(tris)), types=k.GL_DYNAMIC_DRAW)
-    antah.vbo.init(data=nil, size=(cuint)(models[index].npos * (cuint)sizeof(vertex)), types=k.GL_DYNAMIC_DRAW)
-    antah.vao.add_buffer(antah.vbo, antah.vbl)
-    antah.pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
+    antah[].vao.init()
+    antah[].vbl.init()
+    antah[].vbl.push(3)
+    antah[].vbl.push(3)
+    antah[].vbl.push(3)
+    antah[].ibo.init(data=models[index].tris, size=(cuint)(models[index].ntris * (cuint)sizeof(tris)), types=k.GL_DYNAMIC_DRAW)
+
+    # HERE IS THE PROBLEM
+    antah[].vbo.init(data=vertices[0].addr, size=(cuint)((models[index].npos) * (cuint)sizeof(vertex)), types=k.GL_DYNAMIC_DRAW)
+    # HERE IS THE PROBLEM
+
+    antah[].vao.add_buffer(antah.vbo, antah.vbl)
+    antah[].pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
 
 proc draw*(antah: obj) =
-    k.draw_elements((cint)antah.model[].ntris * 3, nil)
+    k.draw_elements((cint)antah.ntris * 3, nil)
 
 proc destroy*(antah: obj) = discard

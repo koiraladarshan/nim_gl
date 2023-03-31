@@ -25,7 +25,7 @@ proc init*() : void =
     var sceneptr : ptr aiScene
     sceneptr = import_file("res/test.obj", sceneptr)
     get_models(sceneptr, theobj.model.addr)
-    theobj.init(1)
+    theobj.addr.init(0)
 
 
 proc draw*() = 
@@ -35,9 +35,10 @@ proc draw*() =
     var look_at : mat4 = m.lookat(eye, center, up)
     var perspective : mat4 = m.persp(0.7853, 640/480, 0.1, 100)
     var mvp : mat4 = perspective * look_at
+    theobj.vao.kbind()
     theobj.pro.bind_shader()
-    k.uniform_mat4(theobj.pro, "u_mvp", mvp[0][0].unsafeAddr)
+    theobj.pro.uniform_mat4("u_mvp", mvp[0][0].unsafeAddr)
     theobj.pro.bind_shader()
-    k.draw_elements((cint)theobj.ntris * 3, nil)
+    theobj.draw()
 
 proc destroy*() = discard

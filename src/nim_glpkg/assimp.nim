@@ -5,16 +5,11 @@ type
         x*: cfloat
         y*: cfloat
         z*: cfloat
-    
-    color = object
-        r*: cfloat
-        g*: cfloat
-        b*: cfloat
 
 type 
     vertex* = object
         p*: pos
-        c*: color
+        c*: pos
         n*: pos
 
 const MAXLEN = 1024
