@@ -29,9 +29,9 @@ type
         ntris* : cuint
 
 proc init*(antah: ptr obj, index: cuint) = 
-    model_to_vertex(antah.model, antah[].vert.addr, index)
-    new_carray(model, models, antah[].model, index)
-    new_carray(vertex, vertices, antah[].vert, models[index].npos)
+    model_to_vertex(antah[].model, antah[].vert.addr, index)
+    new_carray(model, models, antah[].model, 0)
+    new_carray(vertex, vertices, antah[].vert, 0)
 
     antah.ntris = models[index].ntris
     antah[].vao.init()
@@ -42,10 +42,10 @@ proc init*(antah: ptr obj, index: cuint) =
     antah[].ibo.init(data=models[index].tris, size=(cuint)(models[index].ntris * (cuint)sizeof(tris)), types=k.GL_DYNAMIC_DRAW)
 
     # HERE IS THE PROBLEM
-    antah[].vbo.init(data=vertices[0].addr, size=(cuint)((models[index].npos) * (cuint)sizeof(vertex)), types=k.GL_DYNAMIC_DRAW)
+    antah[].vbo.init(data=vertices, size=(cuint)((models[index].npos) * (cuint)sizeof(vertex)), types=k.GL_DYNAMIC_DRAW)
     # HERE IS THE PROBLEM
 
-    antah[].vao.add_buffer(antah.vbo, antah.vbl)
+    antah[].vao.add_buffer(antah[].vbo, antah[].vbl)
     antah[].pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
 
 proc draw*(antah: obj) =

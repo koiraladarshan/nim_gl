@@ -34,7 +34,7 @@ func fnormal_fill*(): cstring =
         float diff = max(dot(norm, light_dir), 0.0);
         vec3 diffuse = diff * vec3(1.0, 1.0, 1.0);
         vec3 result = diffuse * vec3(1.0, 1.0, 0.0);
-        FragColor = vec4(result, 1.0) + vec4(0.1, 0.1, 0.1, 0.0);
+        FragColor = vec4(result, 1.0);
     }
     """
     

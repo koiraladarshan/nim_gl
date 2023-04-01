@@ -5,14 +5,6 @@ import ../nim_glpkg/assimp as a
 import std/macros
 import models as models
 
-
-var vao: vao
-var vbo: vbo
-var vbl: vbl
-var pro: cuint
-var ibo: ibo
-
-
 macro new_carray(typo: untyped, vari: untyped, to: untyped, size: untyped): untyped =
     let lit = ident($`vari` & "_size")
     quote do:
@@ -25,11 +17,11 @@ proc init*() : void =
     var sceneptr : ptr aiScene
     sceneptr = import_file("res/test.obj", sceneptr)
     get_models(sceneptr, theobj.model.addr)
-    theobj.addr.init(0)
+    theobj.addr.init(1)
 
 
 proc draw*() = 
-    var eye : vec3 = [(cfloat)3, (cfloat)3, (cfloat) 3]
+    var eye : vec3 = [(cfloat)5, (cfloat)3, (cfloat) 3]
     var center : vec3 = [(cfloat)0.0, (cfloat)0.0, (cfloat) 0.0]
     var up : vec3 = [(cfloat)0, (cfloat)1, (cfloat) 0]
     var look_at : mat4 = m.lookat(eye, center, up)
