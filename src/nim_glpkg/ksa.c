@@ -1,7 +1,4 @@
 #define KSAGL_IMPLEMENTATION_OPENGL
-#include "ksa.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 /* INITIALIZING NUKLEAR STUFFS */
 #define NK_INCLUDE_FIXED_TYPES
@@ -14,6 +11,9 @@
 #define NK_IMPLEMENTATION
 #define NK_GLFW_GL3_IMPLEMENTATION
 #define NK_KEYSTATE_BASED_INPUT
+#include "ksa.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "nuklear_glfw.h"
 
 #define WINDOW_WIDTH 1200
@@ -21,6 +21,43 @@
 #define MAX_VERTEX_BUFFER 512 * 1024
 #define MAX_ELEMENT_BUFFER 128 * 1024
 #define INCLUDE_OVERVIEW
+
+struct nk_glfw maini_glfw = {0};
+int window_width;
+int window_height;
+struct nk_context *main_ctx;
+struct nk_colorf bg;
+struct nk_font *font;
+
+/* NUKLEAR WRAPPER */
+void init_nk(GLFWwindow *window)
+{
+    main_ctx = nk_glfw3_init(&maini_glfw, window, NK_GLFW3_INSTALL_CALLBACKS);
+    struct nk_font_atlas *atlas;
+    nk_glfw3_font_stash_begin(&maini_glfw, &atlas);
+    font = nk_font_atlas_add_from_file(atlas, "res/sanskrit.ttf", 20, 0);
+    nk_glfw3_font_stash_end(&maini_glfw);
+    nk_style_set_font(main_ctx, &font->handle);
+}
+
+void draw_nk()
+{
+    nk_glfw3_new_frame(&maini_glfw);
+    if (nk_begin(main_ctx, "Debug", nk_rect(0, 0, 100, 100),
+                 NK_WINDOW_BORDER | NK_WINDOW_TITLE))
+    {
+        nk_style_set_font(main_ctx, &font->handle);
+        nk_layout_row_static(main_ctx, 20, 100 * 0.2 * 0.9, 1);
+        nk_label(main_ctx, "Hello Bruh", NK_TEXT_ALIGN_CENTERED);
+    }
+    nk_end(main_ctx);
+    nk_glfw3_render(&maini_glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER, MAX_ELEMENT_BUFFER);
+}
+
+void destroy_nk()
+{
+    nk_glfw3_shutdown(&maini_glfw);
+}
 
 /* INITIALIZING GLEWS */
 int init_glew()

@@ -18,6 +18,15 @@ const GL_DYNAMIC_DRAW* : cuint = 0x88E8
     These are all initialzation stuffs
 ]#
 
+#[ For NUKLEAR WRAPS ]#
+proc init_nk*(main_window: GLFWwindow) {.importc.}
+
+proc draw_nk*() {.importc.}
+
+proc destroy_nk*() {.importc.}
+
+#[ For GLFW and OpenGL ]#
+
 proc init_glew*() : cint {.importc.}
 
 proc clear_color*(r, g, b, a: cfloat) {.importc.}

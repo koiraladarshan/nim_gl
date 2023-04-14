@@ -190,7 +190,7 @@ void get_models(const struct aiScene *scene, struct model **models)
 
   for (int i = 0; i < (*models)[0].npos; i++)
   {
-    printf("x:%f, y:%f, z:%f\n", (*models)[0].v[i].x, (*models)[0].v[i].y, (*models)[0].v[i].z);
+    //   printf("x:%f, y:%f, z:%f\n", (*models)[0].v[i].x, (*models)[0].v[i].y, (*models)[0].v[i].z);
   }
 }
 
@@ -201,7 +201,7 @@ void model_to_vertex(struct model *themodel, struct vertex **thevertices, int in
   {
     (*thevertices)[i] = (struct vertex){
         (struct position){themodel[index].v[i].x, themodel[index].v[i].y, themodel[index].v[i].z},
-        (struct position){0.0, 0.0, 0.0},
+        (struct position){0.0, 1.0, 0.0},
         (struct position){themodel[index].n[i].x, themodel[index].n[i].y, themodel[index].n[i].z}};
   }
 }

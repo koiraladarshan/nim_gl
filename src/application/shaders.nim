@@ -7,6 +7,7 @@ func vnormal_fill*(): cstring =
 
     out vec3 v_normal;
     out vec3 v_fragpos;
+    out vec3 v_color;
 
     uniform mat4 u_mvp;
 
@@ -15,6 +16,7 @@ func vnormal_fill*(): cstring =
         gl_Position = u_mvp * vec4(aPos, 1.0);
         v_fragpos = vec3(u_mvp * vec4(aPos, 1.0));
         v_normal = aNormal;
+        v_color = aColor;
     } 
     """
     
@@ -23,9 +25,10 @@ func fnormal_fill*(): cstring =
     #version 330 core
     in vec3 v_normal;
     in vec3 v_fragpos;
+    in vec3 v_color;
     out vec4 FragColor;
 
-    vec3 lightPos = vec3(-2, -2, -2);
+    vec3 lightPos = vec3(-5, -5, -5);
     vec3 norm = normalize(v_normal);
     vec3 light_dir = normalize(lightPos - v_fragpos);
 

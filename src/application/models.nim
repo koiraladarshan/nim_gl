@@ -8,10 +8,10 @@ import std/macros
     MACROS
 ]#
 
-macro new_carray(typo: untyped, vari: untyped, to: untyped, size: untyped): untyped =
-    let lit = ident($`vari` & "_size")
+macro new_carray*(typo: untyped, variable: untyped, to: untyped, size: untyped): untyped =
+    let lit = ident($`variable` & "_size")
     quote do:
-        var `vari` : ptr UncheckedArray[`typo`] = cast[ptr UncheckedArray[`typo`]](`to`)
+        var `variable` : ptr UncheckedArray[`typo`] = cast[ptr UncheckedArray[`typo`]](`to`)
         var `lit` : cint = (cint)`size`
 
 type
@@ -29,24 +29,25 @@ type
         ntris* : cuint
 
 proc init*(antah: ptr obj, index: cuint) = 
-    model_to_vertex(antah[].model, antah[].vert.addr, index)
-    new_carray(model, models, antah[].model, 0)
-    new_carray(vertex, vertices, antah[].vert, 0)
+    model_to_vertex(antah.model, antah.vert.addr, index)
+    new_carray(model, models, antah.model, 0)
+    new_carray(typo = vertex, variable = vertices, to = antah.vert, size = 0)
 
     antah.ntris = models[index].ntris
-    antah[].vao.init()
-    antah[].vbl.init()
-    antah[].vbl.push(3)
-    antah[].vbl.push(3)
-    antah[].vbl.push(3)
-    antah[].ibo.init(data=models[index].tris, size=(cuint)(models[index].ntris * (cuint)sizeof(tris)), types=k.GL_DYNAMIC_DRAW)
+    antah.vao.init()
+    antah.vbl.init()
+    antah.vbl.push(3)
+    antah.vbl.push(3)
+    antah.vbl.push(3)
+    antah.ibo.init(data = models[index].tris, size = (cuint)(models[index].ntris * (cuint)sizeof(tris)), types = k.GL_DYNAMIC_DRAW)
 
     # HERE IS THE PROBLEM
-    antah[].vbo.init(data=vertices, size=(cuint)((models[index].npos) * (cuint)sizeof(vertex)), types=k.GL_DYNAMIC_DRAW)
+    antah.vbo.init(data = vertices, size = (cuint)((models[index].npos) * (cuint)sizeof(vertex)), types = k.GL_DYNAMIC_DRAW)
     # HERE IS THE PROBLEM
 
-    antah[].vao.add_buffer(antah[].vbo, antah[].vbl)
-    antah[].pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
+
+    antah.vao.add_buffer(antah.vbo, antah.vbl)
+    antah.pro = compile_shaders(s.vnormal_fill(), s.fnormal_fill())
 
 proc draw*(antah: obj) =
     k.draw_elements((cint)antah.ntris * 3, nil)

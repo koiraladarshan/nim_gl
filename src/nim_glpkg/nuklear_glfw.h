@@ -11,6 +11,7 @@
  *
  * ===============================================================
  */
+#define NK_IMPLEMENTATION
 #include "nuklear.h"
 #ifndef NK_GLFW_GL3_H_
 #define NK_GLFW_GL3_H_
